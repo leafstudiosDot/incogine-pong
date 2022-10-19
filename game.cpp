@@ -19,7 +19,9 @@ Game::~Game() {
     console.Println("Game purged successfully");
 }
 
-float playery = 5, speed = 10;
+float playery = 300, speed = 10;
+float player2y = 300;
+float ballx = 625, bally = 365, ballspeed = 7;
 const Uint8 *_Pkeyboard = SDL_GetKeyboardState(0);
 
 
@@ -143,19 +145,19 @@ void Game::Render() {
     
     // Ball
     glPushMatrix();
-    glTranslated(0, playery, 0);
+    glTranslated(ballx, bally, 0);
     glBegin(GL_QUADS);
         glColor3ub(255, 255, 255);
         glVertex2f(0, 0);
-        glVertex2f(25, 0);
-        glVertex2f(25, 100);
-        glVertex2f(0, 100);
+        glVertex2f(15, 0);
+        glVertex2f(15, 15);
+        glVertex2f(0, 15);
     glEnd();
     glPopMatrix();
     
     // Player 2
     glPushMatrix();
-    glTranslated(1280-25, 0, 0);
+    glTranslated(1280-25, player2y, 0);
     glBegin(GL_QUADS);
         glColor3ub(255, 255, 255);
         glVertex2f(0, 0);
