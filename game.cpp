@@ -19,7 +19,7 @@ Game::~Game() {
     console.Println("Game purged successfully");
 }
 
-float playerx = 0, playery = 0, speed = 5;
+float playery = 5, speed = 10;
 const Uint8 *_Pkeyboard = SDL_GetKeyboardState(0);
 
 
@@ -28,7 +28,7 @@ void Game::RawEvent(SDL_Event event, int _windowWidth, int _windowHeight) {
     Console console;
     
     // Type-Style KeyDown (Hold Key)
-    if (_Pkeyboard[SDL_SCANCODE_D]) {
+    /*if (_Pkeyboard[SDL_SCANCODE_D]) {
         // Pressed
         playerx += speed;
     } else {
@@ -41,7 +41,7 @@ void Game::RawEvent(SDL_Event event, int _windowWidth, int _windowHeight) {
         playerx -= speed;
     } else {
         // Released
-    }
+    }*/
 
     if (_Pkeyboard[SDL_SCANCODE_W]) {
         // Pressed
@@ -92,19 +92,75 @@ void Game::Start() {
 
 void Game::Update(int _windowWidth, int _windowHeight) {
     // Executes every frame at game
+    
+    if (playery >= 615) {
+        playery = 615;
+    } else if (playery <= 5) {
+        playery = 5;
+    }
 }
 
 void Game::Render() {
     // Render Game
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+    
+    // Border Top
     glPushMatrix();
-    glTranslated(playerx, playery, 0);
+    glTranslated(0, 0, 0);
     glBegin(GL_QUADS);
-        glColor3ub(255, 0, 0);
+        glColor3ub(255, 255, 255);
         glVertex2f(0, 0);
-        glVertex2f(100, 0);
-        glVertex2f(100, 100);
+        glVertex2f(1280, 0);
+        glVertex2f(1280, 5);
+        glVertex2f(0, 5);
+    glEnd();
+    glPopMatrix();
+    
+    // Border Bottom
+    glPushMatrix();
+    glTranslated(0, 0, 0);
+    glBegin(GL_QUADS);
+        glColor3ub(255, 255, 255);
+        glVertex2f(0, 720);
+        glVertex2f(1280, 720);
+        glVertex2f(1280, 715);
+        glVertex2f(0, 715);
+    glEnd();
+    glPopMatrix();
+    
+    // Player 1
+    glPushMatrix();
+    glTranslated(0, playery, 0);
+    glBegin(GL_QUADS);
+        glColor3ub(255, 255, 255);
+        glVertex2f(0, 0);
+        glVertex2f(25, 0);
+        glVertex2f(25, 100);
+        glVertex2f(0, 100);
+    glEnd();
+    glPopMatrix();
+    
+    // Ball
+    glPushMatrix();
+    glTranslated(0, playery, 0);
+    glBegin(GL_QUADS);
+        glColor3ub(255, 255, 255);
+        glVertex2f(0, 0);
+        glVertex2f(25, 0);
+        glVertex2f(25, 100);
+        glVertex2f(0, 100);
+    glEnd();
+    glPopMatrix();
+    
+    // Player 2
+    glPushMatrix();
+    glTranslated(1280-25, 0, 0);
+    glBegin(GL_QUADS);
+        glColor3ub(255, 255, 255);
+        glVertex2f(0, 0);
+        glVertex2f(25, 0);
+        glVertex2f(25, 100);
         glVertex2f(0, 100);
     glEnd();
     glPopMatrix();
